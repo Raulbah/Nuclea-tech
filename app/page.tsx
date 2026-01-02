@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   ChefHat, Factory, Wrench, CheckCircle2, 
   BarChart3, Smartphone, ArrowRight, ShieldCheck, Zap,
@@ -53,10 +53,11 @@ export default function LandingPage() {
             <a href="#tecnologia" className="hover:text-[#BDE8F5] transition">Tecnología</a>
             <Link href="/about" className="hover:text-[#BDE8F5] transition">Nosotros</Link>
           </div>
-
-          <Button className="bg-[#1C4D8D] hover:bg-[#4988C4] text-white rounded-full px-6 font-bold shadow-md transition-all">
-            Agendar Demo
-          </Button>
+          <a href="#contacto">
+            <Button className="bg-[#1C4D8D] hover:bg-[#4988C4] cursor-pointer text-white rounded-full px-6 font-bold shadow-md transition-all">
+              Agendar Demo
+            </Button>
+          </a>
         </div>
       </nav>
 
@@ -99,7 +100,7 @@ export default function LandingPage() {
 
             <div className="flex justify-center">
               <a href="#contacto">
-                <Button size="lg" className="bg-[#1C4D8D] hover:bg-[#4988C4] text-white text-lg px-8 h-14 rounded-xl shadow-lg shadow-[#1C4D8D]/50 border border-[#4988C4]/30">
+                <Button size="lg" className="bg-[#1C4D8D] hover:bg-[#4988C4] text-white text-lg px-8 h-14 rounded-xl shadow-lg shadow-[#1C4D8D]/50 border border-[#4988C4]/30 cursor-pointer">
                   Quiero Digitalizar mi Negocio
                 </Button>
               </a>
@@ -147,7 +148,7 @@ export default function LandingPage() {
                   <p className="text-slate-600 text-sm mb-6">
                     Controla pedidos, recetas, inventarios y costos desde un solo sistema centralizado.
                   </p>
-                  <Button variant="outline" className="w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto">Ver solución</Button>
+                  <Button variant="outline" className="cursor-pointer w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto">Ver solución</Button>
                 </CardContent>
               </Card>
             </motion.div>
@@ -168,7 +169,7 @@ export default function LandingPage() {
                   <p className="text-slate-600 text-sm mb-6">
                     Visualiza el desempeño real de tu negocio con métricas claras y en tiempo real.
                   </p>
-                  <Button variant="outline" className="w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto">Ver solución</Button>
+                  <Button variant="outline" className="cursor-pointer w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto">Ver solución</Button>
                 </CardContent>
               </Card>
             </motion.div>
@@ -189,7 +190,7 @@ export default function LandingPage() {
                   <p className="text-slate-600 text-sm mb-6">
                     Digitaliza órdenes de trabajo, tiempos de paro y seguimiento de activos.
                   </p>
-                  <Button variant="outline" className="w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto">Ver solución</Button>
+                  <Button variant="outline" className="cursor-pointer w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto">Ver solución</Button>
                 </CardContent>
               </Card>
             </motion.div>
@@ -210,7 +211,7 @@ export default function LandingPage() {
                   <p className="text-slate-600 text-sm mb-6">
                     Landing pages, E-commerce y sitios web a medida para cualquier tipo de negocio.
                   </p>
-                  <Button variant="outline" className="w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto">Ver solución</Button>
+                  <Button variant="outline" className="cursor-pointer w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto">Ver solución</Button>
                 </CardContent>
               </Card>
             </motion.div>
@@ -223,8 +224,8 @@ export default function LandingPage() {
       <section id="tecnologia" className="py-24 bg-[#0F2854] text-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-16">
           <motion.div 
-             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
-             className="md:w-1/2"
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
+            className="md:w-1/2"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
               Información clara, rápida y <span className="text-[#4988C4]">disponible siempre</span>
@@ -247,10 +248,10 @@ export default function LandingPage() {
           </motion.div>
 
           <motion.div 
-             initial={{ opacity: 0, x: 50 }} 
-             whileInView={{ opacity: 1, x: 0 }} 
-             transition={{ duration: 0.7 }}
-             className="md:w-1/2 w-full"
+            initial={{ opacity: 0, x: 50 }} 
+            whileInView={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 0.7 }}
+            className="md:w-1/2 w-full"
           >
             <Card className="shadow-2xl border-0 bg-white/10 backdrop-blur-sm">
               <CardHeader className="space-y-3 border-b border-white/10 pb-4">
@@ -333,7 +334,7 @@ export default function LandingPage() {
                             <label className="text-sm font-medium text-[#0F2854]">Mensaje</label>
                             <Textarea placeholder="Breve descripción de tu necesidad..." className="h-24 border-[#4988C4]/30 focus:border-[#1C4D8D]" />
                         </div>
-                        <Button className="w-full bg-[#1C4D8D] hover:bg-[#0F2854] text-white h-12 text-lg font-bold transition-colors">
+                        <Button className="cursor-pointer w-full bg-[#1C4D8D] hover:bg-[#0F2854] text-white h-12 text-lg font-bold transition-colors">
                             Quiero mi sistema digital <ArrowRight className="ml-2 w-5 h-5"/>
                         </Button>
                     </form>

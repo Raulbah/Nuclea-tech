@@ -92,11 +92,12 @@ export default function LandingPage() {
                 {/* Efecto Glow detrás del logo */}
                 <div className="absolute inset-0 bg-linear-to-r from-[#d524fd] to-[#26bafd] blur-lg opacity-50 group-hover:opacity-100 transition duration-500 rounded-full"></div>
             </div>
-            
-            <span className="bg-clip-text text-transparent bg-linear-to-r from-white via-white to-slate-400 group-hover:to-[#26bafd] transition-colors">
-              NUCLEA
-            </span> 
-            <span className="ml-1 text-[#26bafd] drop-shadow-[0_0_5px_rgba(38,186,253,0.8)]">TECH</span>
+            <div className='hidden md:flex'>
+              <span className="bg-clip-text text-transparent bg-linear-to-r from-white via-white to-slate-400 group-hover:to-[#26bafd] transition-colors">
+                NUCLEA
+              </span> 
+              <span className="ml-1 text-[#26bafd] drop-shadow-[0_0_5px_rgba(38,186,253,0.8)]">TECH</span>
+            </div>
           </Link>
           
           <div className="hidden md:flex space-x-8 text-sm font-semibold tracking-wide text-slate-300">
@@ -106,7 +107,7 @@ export default function LandingPage() {
           </div>
           
           <a href="#contacto">
-            <Button className="bg-transparent border border-[#26bafd] text-[#26bafd] hover:bg-[#26bafd] hover:text-black rounded-full px-6 font-bold shadow-[0_0_10px_rgba(38,186,253,0.3)] hover:shadow-[0_0_20px_rgba(38,186,253,0.6)] transition-all duration-300">
+            <Button className="bg-transparent border border-[#26bafd] text-[#26bafd] hover:bg-[#26bafd] hover:text-black rounded-full px-6 font-bold shadow-[0_0_10px_rgba(38,186,253,0.3)] hover:shadow-[0_0_20px_rgba(38,186,253,0.6)] transition-all duration-300 md:text-sm text-xs h-10 flex items-center">
               Agendar Demo
             </Button>
           </a>
@@ -127,28 +128,22 @@ export default function LandingPage() {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#d524fd] rounded-full blur-[150px] opacity-20 animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#26bafd] rounded-full blur-[150px] opacity-20 animate-pulse delay-1000"></div>
 
-        <div className="relative z-10 max-w-5xl px-6 text-center mt-10">
+        <div className="relative z-10 max-w-5xl px-5 text-center">
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }} 
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-block px-4 py-1.5 mb-6 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
-                <span className="text-[#d524fd] font-bold tracking-widest text-xs uppercase drop-shadow-[0_0_5px_#d524fd]">
-                    Sistema Operativo 2026
-                </span>
-            </div>
-
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-8 leading-tight tracking-tight">
+            <h1 className="text-3xl md:text-7xl font-extrabold mb-5 leading-tight tracking-tight">
               ¿Sabes realmente cómo está <br/>
               <span className="bg-clip-text text-transparent bg-linear-to-r from-[#d524fd] via-[#be69d8] to-[#26bafd] drop-shadow-[0_0_30px_rgba(213,36,253,0.4)]">
-                rindiendo tu operación?
+                rindiendo tu negocio?
               </span>
             </h1>
             
-            <p className="text-xl text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
-              Creamos sistemas que miden indicadores clave como producción, eficiencia y paros.
-              Visualiza tu información en <span className="text-[#26bafd]">dashboards neón</span> y toma decisiones precisas.
+            <p className="text-lg text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
+              Creamos sistemas que miden indicadores clave para la toma de decisiones.
+              No mas <span className="text-[#26bafd]">papel</span> lleva tu negocio a todas partes.
             </p>
 
             <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-10 mb-12 text-sm md:text-base font-medium text-white">
@@ -381,7 +376,7 @@ export default function LandingPage() {
                                 disabled={enviando}
                                 className="w-full bg-linear-to-r from-[#d524fd] to-[#26bafd] hover:from-[#be20e0] hover:to-[#21a0d8] text-white h-12 text-lg font-bold transition-all shadow-[0_0_15px_rgba(213,36,253,0.4)] hover:shadow-[0_0_25px_rgba(38,186,253,0.6)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {enviando ? "Enviando..." : "Quiero mi sistema digital"} 
+                                {enviando ? "Enviando..." : "Cotizar Pagina"} 
                                 {!enviando && <ArrowRight className="ml-2 w-5 h-5"/>}
                             </Button>
                         </form>

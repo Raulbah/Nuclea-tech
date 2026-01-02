@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, User, Code, HeartHandshake } from 'lucide-react';
 import { motion } from "framer-motion";
 
+
 export default function AboutPage() {
     return (
         <div className="min-h-screen bg-white font-sans text-slate-900">

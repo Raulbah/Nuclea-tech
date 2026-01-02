@@ -8,26 +8,38 @@ import {
 } from 'lucide-react';
 import { motion } from "framer-motion";
 import Link from 'next/link';
+import Image from 'next/image';
 
-// Componentes UI (Shadcn)
+// Importamos la fuente tecnológica
+import { Outfit } from 'next/font/google';
+
+// Componentes UI (Shadcn) - Asumimos que soportan clases custom
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-// Importamos la Server Action que creamos en el Paso 3
 import { enviarCorreo } from './actions';
+
+// Configuración de la fuente
+const outfit = Outfit({ 
+  subsets: ['latin'],
+  weight: ['300', '400', '600', '800'],
+  variable: '--font-outfit',
+});
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
 };
 
+// Colores definidos para reutilizar en clases dinámicas si fuera necesario
+// Purple: #d524fd
+// Cyan: #26bafd
+
 export default function LandingPage() {
   const [isScrolled, setIsScrolled] = useState(false);
-  
-  // Estados para el formulario
   const [enviando, setEnviando] = useState(false);
   const [enviado, setEnviado] = useState(false);
 
@@ -39,9 +51,8 @@ export default function LandingPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Función que maneja el envío del formulario
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault(); // Evita que la página se recargue
+    event.preventDefault(); 
     setEnviando(true);
     
     const formData = new FormData(event.currentTarget);
@@ -56,28 +67,46 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-[#0F2854] overflow-x-hidden">
+    <div className={`min-h-screen bg-[#030712] text-slate-200 overflow-x-hidden ${outfit.className} selection:bg-[#d524fd] selection:text-white`}>
       
       {/* NAV BAR */}
       <nav 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent ${
           isScrolled 
-            ? 'bg-[#0F2854]/90 backdrop-blur-md shadow-lg py-3' 
-            : 'bg-transparent py-5' 
+            ? 'bg-[#030712]/80 backdrop-blur-lg border-[#26bafd]/20 shadow-[0_0_15px_rgba(38,186,253,0.1)] py-2' 
+            : 'bg-transparent py-6' 
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-black tracking-tighter text-white">
-            NUCLEA <span className="text-[#4988C4]">TECH</span>
+          <Link href="/" className="text-2xl font-black tracking-tighter text-white flex items-center group">
+            {/* Logo placeholder - Reemplazar con tu SVG real */}
+            <div className="mr-2 relative w-10 h-10">
+                {/* Si la imagen no carga, mostramos un fallback visual */}
+                <Image
+                    src="/Logo.svg" 
+                    alt="NT"
+                    width={40}
+                    height={40}
+                    className="object-contain relative z-10"
+                />
+                {/* Efecto Glow detrás del logo */}
+                <div className="absolute inset-0 bg-linear-to-r from-[#d524fd] to-[#26bafd] blur-lg opacity-50 group-hover:opacity-100 transition duration-500 rounded-full"></div>
+            </div>
+            
+            <span className="bg-clip-text text-transparent bg-linear-to-r from-white via-white to-slate-400 group-hover:to-[#26bafd] transition-colors">
+              NUCLEA
+            </span> 
+            <span className="ml-1 text-[#26bafd] drop-shadow-[0_0_5px_rgba(38,186,253,0.8)]">TECH</span>
           </Link>
           
-          <div className="hidden md:flex space-x-8 text-sm font-medium text-white/90">
-            <a href="#soluciones" className="hover:text-[#BDE8F5] transition">Soluciones</a>
-            <a href="#tecnologia" className="hover:text-[#BDE8F5] transition">Tecnología</a>
-            <Link href="/about" className="hover:text-[#BDE8F5] transition">Nosotros</Link>
+          <div className="hidden md:flex space-x-8 text-sm font-semibold tracking-wide text-slate-300">
+            <a href="#soluciones" className="hover:text-[#d524fd] transition hover:drop-shadow-[0_0_8px_#d524fd]">Soluciones</a>
+            <a href="#tecnologia" className="hover:text-[#26bafd] transition hover:drop-shadow-[0_0_8px_#26bafd]">Tecnología</a>
+            <Link href="/about" className="hover:text-white transition">Nosotros</Link>
           </div>
+          
           <a href="#contacto">
-            <Button className="bg-[#1C4D8D] hover:bg-[#4988C4] text-white rounded-full px-6 font-bold shadow-md transition-all cursor-pointer">
+            <Button className="bg-transparent border border-[#26bafd] text-[#26bafd] hover:bg-[#26bafd] hover:text-black rounded-full px-6 font-bold shadow-[0_0_10px_rgba(38,186,253,0.3)] hover:shadow-[0_0_20px_rgba(38,186,253,0.6)] transition-all duration-300">
               Agendar Demo
             </Button>
           </a>
@@ -85,46 +114,60 @@ export default function LandingPage() {
       </nav>
 
       {/* HERO SECTION */}
-      <section className="relative h-175 flex items-center justify-center overflow-hidden">
+      <section className="relative h-200 flex items-center justify-center overflow-hidden">
+        {/* Background Image Darkened */}
         <div 
-          className="absolute inset-0 z-0 bg-cover bg-center"
+          className="absolute inset-0 z-0 bg-cover bg-center opacity-40 mix-blend-overlay"
           style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop")' }}
-        >
-          <div className="absolute inset-0 bg-[#0F2854]/90"></div>
-        </div>
+        ></div>
+        {/* Capa de degradado oscuro */}
+        <div className="absolute inset-0 bg-linear-to-b from-[#030712] via-[#030712]/90 to-[#030712]"></div>
+        
+        {/* Elementos decorativos de fondo (Orbes de luz) */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#d524fd] rounded-full blur-[150px] opacity-20 animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#26bafd] rounded-full blur-[150px] opacity-20 animate-pulse delay-1000"></div>
 
-        <div className="relative z-10 max-w-5xl px-6 text-center text-white mt-10">
+        <div className="relative z-10 max-w-5xl px-6 text-center mt-10">
           <motion.div 
-            initial={{ opacity: 0, y: 30 }} 
-            animate={{ opacity: 1, y: 0 }} 
+            initial={{ opacity: 0, scale: 0.9 }} 
+            animate={{ opacity: 1, scale: 1 }} 
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+            <div className="inline-block px-4 py-1.5 mb-6 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
+                <span className="text-[#d524fd] font-bold tracking-widest text-xs uppercase drop-shadow-[0_0_5px_#d524fd]">
+                    Sistema Operativo 2026
+                </span>
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-8 leading-tight tracking-tight">
               ¿Sabes realmente cómo está <br/>
-              <span className="text-[#4988C4]">rindiendo tu operación?</span>
+              <span className="bg-clip-text text-transparent bg-linear-to-r from-[#d524fd] via-[#be69d8] to-[#26bafd] drop-shadow-[0_0_30px_rgba(213,36,253,0.4)]">
+                rindiendo tu operación?
+              </span>
             </h1>
             
-            <p className="text-xl text-[#BDE8F5] mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
               Creamos sistemas que miden indicadores clave como producción, eficiencia y paros.
-              Visualiza tu información en dashboards claros y toma mejores decisiones.
+              Visualiza tu información en <span className="text-[#26bafd]">dashboards neón</span> y toma decisiones precisas.
             </p>
 
-            <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8 mb-10 text-sm md:text-base font-medium text-white">
+            <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-10 mb-12 text-sm md:text-base font-medium text-white">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="text-[#4988C4]" /> Indicadores en tiempo real
+                <CheckCircle2 className="text-[#d524fd] drop-shadow-[0_0_8px_#d524fd]" /> Indicadores en tiempo real
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="text-[#4988C4]" /> Reportes automáticos
+                <CheckCircle2 className="text-[#26bafd] drop-shadow-[0_0_8px_#26bafd]" /> Reportes automáticos
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="text-[#4988C4]" /> Acceso desde cualquier dispositivo
+                <CheckCircle2 className="text-[#d524fd] drop-shadow-[0_0_8px_#d524fd]" /> Acceso universal
               </div>
             </div>
 
-            <div className="flex justify-center">
-              <a href="#contacto">
-                <Button size="lg" className="bg-[#1C4D8D] hover:bg-[#4988C4] text-white text-lg px-8 h-14 rounded-xl shadow-lg shadow-[#1C4D8D]/50 border border-[#4988C4]/30 cursor-pointer transition-all">
-                  Quiero Digitalizar mi Negocio
+            <div className="flex justify-center relative group">
+              <div className="absolute -inset-1 bg-linear-to-r from-[#d524fd] to-[#26bafd] rounded-xl blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+              <a href="#contacto" className="relative">
+                <Button size="lg" className="bg-black hover:bg-slate-900 text-white text-lg px-10 h-16 rounded-xl border border-white/10 cursor-pointer transition-all flex items-center gap-2">
+                  Quiero Digitalizar mi Negocio <ArrowRight className="text-[#26bafd]"/>
                 </Button>
               </a>
             </div>
@@ -133,181 +176,127 @@ export default function LandingPage() {
       </section>
 
       {/* SECCIÓN SOLUCIONES A MEDIDA */}
-      <section id="soluciones" className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="soluciones" className="py-24 bg-[#030712] relative">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
             className="text-center mb-16 max-w-3xl mx-auto"
           >
-            <span className="text-[#1C4D8D] font-bold tracking-wider text-sm uppercase bg-[#BDE8F5]/30 px-3 py-1 rounded-full">
-              Soluciones digitales personalizadas
+            <span className="text-[#26bafd] font-bold tracking-widest text-sm uppercase">
+              Soluciones Personalizadas
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-[#0F2854]">
-              Un sistema diseñado exactamente para tu negocio
+            <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">
+              Un sistema diseñado <span className="text-[#d524fd]">exactamente para ti</span>
             </h2>
-            <p className="text-slate-600 text-lg leading-relaxed">
-              No vendemos software genérico. Analizamos tu operación y desarrollamos una solución digital que se adapta a tus procesos, indicadores y objetivos.
+            <p className="text-slate-400 text-lg leading-relaxed font-light">
+              No vendemos software genérico. Analizamos tu operación y desarrollamos una arquitectura digital que se adapta a tus procesos.
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            {/* Tarjeta 1 - Restaurantes */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }} viewport={{ once: true }}
-              className="h-full"
-            >
-              <Card className="h-full flex flex-col border-t-4 border-t-[#1C4D8D] hover:shadow-xl transition-shadow duration-300 group">
-                <CardHeader>
-                  <div className="w-14 h-14 bg-[#BDE8F5] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <ChefHat className="text-[#0F2854] w-8 h-8" />
-                  </div>
-                  <CardTitle className="text-xl text-[#0F2854]">Gestión de Restaurantes</CardTitle>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col">
-                  <p className="text-slate-600 text-sm mb-6">
-                    Controla pedidos, recetas, inventarios y costos desde un solo sistema centralizado.
-                  </p>
-                  <Button variant="outline" className="w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto cursor-pointer transition-all">Ver solución</Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Tarjeta 2 - Indicadores / OEE */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }} viewport={{ once: true }}
-              className="h-full"
-            >
-              <Card className="h-full flex flex-col border-t-4 border-t-[#4988C4] hover:shadow-xl transition-shadow duration-300 group">
-                <CardHeader>
-                  <div className="w-14 h-14 bg-[#BDE8F5] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <BarChart3 className="text-[#0F2854] w-8 h-8" />
-                  </div>
-                  <CardTitle className="text-xl text-[#0F2854]">Indicadores y Dashboards</CardTitle>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col">
-                  <p className="text-slate-600 text-sm mb-6">
-                    Visualiza el desempeño real de tu negocio con métricas claras y en tiempo real.
-                  </p>
-                  <Button variant="outline" className="w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto cursor-pointer transition-all">Ver solución</Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Tarjeta 3 - Mantenimiento */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.5 }} viewport={{ once: true }}
-              className="h-full"
-            >
-              <Card className="h-full flex flex-col border-t-4 border-t-[#0F2854] hover:shadow-xl transition-shadow duration-300 group">
-                <CardHeader>
-                  <div className="w-14 h-14 bg-[#BDE8F5] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Wrench className="text-[#0F2854] w-8 h-8" />
-                  </div>
-                  <CardTitle className="text-xl text-[#0F2854]">Gestión de Mantenimiento</CardTitle>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col">
-                  <p className="text-slate-600 text-sm mb-6">
-                    Digitaliza órdenes de trabajo, tiempos de paro y seguimiento de activos.
-                  </p>
-                  <Button variant="outline" className="w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto cursor-pointer transition-all">Ver solución</Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Tarjeta 4 - Web Apps */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.5 }} viewport={{ once: true }}
-              className="h-full"
-            >
-              <Card className="h-full flex flex-col border-t-4 border-t-[#4988C4] hover:shadow-xl transition-shadow duration-300 group">
-                <CardHeader>
-                  <div className="w-14 h-14 bg-[#BDE8F5] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Globe className="text-[#0F2854] w-8 h-8" />
-                  </div>
-                  <CardTitle className="text-xl text-[#0F2854]">Desarrollo Web & Apps</CardTitle>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col">
-                  <p className="text-slate-600 text-sm mb-6">
-                    Landing pages, E-commerce y sitios web a medida para cualquier tipo de negocio.
-                  </p>
-                  <Button variant="outline" className="w-full text-[#1C4D8D] border-[#1C4D8D] hover:bg-[#BDE8F5] mt-auto cursor-pointer transition-all">Ver solución</Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-
+            {/* Template de Tarjeta Neon */}
+            {[
+                { title: "Restaurantes", icon: ChefHat, color: "#d524fd", desc: "Controla pedidos, recetas, inventarios y costos desde un solo sistema centralizado." },
+                { title: "Indicadores OEE", icon: BarChart3, color: "#26bafd", desc: "Visualiza el desempeño real de tu negocio con métricas claras y en tiempo real." },
+                { title: "Mantenimiento", icon: Wrench, color: "#d524fd", desc: "Digitaliza órdenes de trabajo, tiempos de paro y seguimiento de activos." },
+                { title: "Web & Apps", icon: Globe, color: "#26bafd", desc: "Landing pages, E-commerce y sitios web a medida con alto impacto visual." }
+            ].map((item, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * index, duration: 0.5 }} viewport={{ once: true }}
+                  className="h-full"
+                >
+                  <Card className="h-full flex flex-col bg-[#0a0a0a] border border-slate-800 hover:border-[#d524fd]/50 transition-all duration-300 group hover:shadow-[0_0_30px_rgba(213,36,253,0.15)] relative overflow-hidden">
+                    {/* Gradiente sutil en hover */}
+                    <div className={`absolute top-0 left-0 w-full h-1 bg-linear-to-r from-[${item.color}] to-transparent opacity-50 group-hover:opacity-100 transition-opacity`}></div>
+                    
+                    <CardHeader>
+                      <div className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-slate-800 group-hover:border-[#26bafd]/30">
+                        <item.icon className="w-8 h-8 transition-colors duration-300" style={{ color: item.color }} />
+                      </div>
+                      <CardTitle className="text-xl text-white group-hover:text-[#26bafd] transition-colors">{item.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex-1 flex flex-col">
+                      <p className="text-slate-400 text-sm mb-6 font-light leading-relaxed">
+                        {item.desc}
+                      </p>
+                      <Button variant="outline" className="w-full bg-transparent text-white border-slate-700 hover:border-[#d524fd] hover:text-[#d524fd] hover:bg-transparent mt-auto cursor-pointer transition-all">Ver solución</Button>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* SECCIÓN VELOCIDAD / TECNOLOGÍA */}
-      <section id="tecnologia" className="py-24 bg-[#0F2854] text-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-16">
+      <section id="tecnologia" className="py-24 bg-[#050505] text-white overflow-hidden relative border-y border-slate-900">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-16 relative z-10">
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
             className="md:w-1/2"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-              Información clara, rápida y <span className="text-[#4988C4]">disponible siempre</span>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+              Información clara, rápida y <span className="bg-clip-text text-transparent bg-linear-to-r from-[#26bafd] to-[#d524fd]">disponible siempre</span>
             </h2>
-            <p className="text-[#BDE8F5] mb-8 text-lg leading-relaxed">
+            <p className="text-slate-400 mb-8 text-lg leading-relaxed font-light">
               Nuestros sistemas están diseñados para responder al instante. Accede a tus datos en tiempo real, desde tu celular, tablet o computadora, estés donde estés.
             </p>
             
             <div className="flex flex-wrap gap-4 mb-8">
-                <span className="flex items-center gap-2 bg-[#1C4D8D]/50 px-4 py-2 rounded-full border border-[#4988C4]/30 text-sm font-medium">
-                    <Zap size={16} className="text-[#4988C4]"/> Datos en tiempo real
-                </span>
-                <span className="flex items-center gap-2 bg-[#1C4D8D]/50 px-4 py-2 rounded-full border border-[#4988C4]/30 text-sm font-medium">
-                    <Smartphone size={16} className="text-[#4988C4]"/> Acceso desde cualquier lugar
-                </span>
-                <span className="flex items-center gap-2 bg-[#1C4D8D]/50 px-4 py-2 rounded-full border border-[#4988C4]/30 text-sm font-medium">
-                    <ShieldCheck size={16} className="text-[#4988C4]"/> Información segura
-                </span>
+                {[
+                    { text: "Datos en tiempo real", icon: Zap },
+                    { text: "Acceso global", icon: Smartphone },
+                    { text: "Cifrado seguro", icon: ShieldCheck }
+                ].map((tag, i) => (
+                    <span key={i} className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-800 text-sm font-medium hover:border-[#26bafd]/50 transition-colors cursor-default">
+                        <tag.icon size={16} className="text-[#26bafd]"/> {tag.text}
+                    </span>
+                ))}
             </div>
           </motion.div>
 
+          {/* TARJETA DEMO SKELETON TECH */}
           <motion.div 
             initial={{ opacity: 0, x: 50 }} 
             whileInView={{ opacity: 1, x: 0 }} 
             transition={{ duration: 0.7 }}
             className="md:w-1/2 w-full"
           >
-            <Card className="shadow-2xl border-0 bg-white/10 backdrop-blur-sm">
-              <CardHeader className="space-y-3 border-b border-white/10 pb-4">
+            <Card className="shadow-2xl border border-slate-800 bg-[#0a0a0a]/80 backdrop-blur-md relative overflow-hidden">
+              {/* Efecto de luz pasando */}
+              <div className="absolute top-0 -left-full w-[50%] h-full bg-linear-to-r from-transparent via-white/5 to-transparent skew-x-12 animate-[shimmer_3s_infinite]"></div>
+
+              <CardHeader className="space-y-3 border-b border-slate-800 pb-4">
                 <div className="flex items-center justify-between">
-                    <Skeleton className="h-4 w-1/3 bg-[#1C4D8D]" />
+                    <Skeleton className="h-4 w-1/3 bg-slate-800" />
                     <div className="flex gap-2">
-                        <div className="h-3 w-3 rounded-full bg-red-400"></div>
-                        <div className="h-3 w-3 rounded-full bg-yellow-400"></div>
-                        <div className="h-3 w-3 rounded-full bg-green-400"></div>
+                        <div className="h-2 w-2 rounded-full bg-[#ff5f56]"></div>
+                        <div className="h-2 w-2 rounded-full bg-[#ffbd2e]"></div>
+                        <div className="h-2 w-2 rounded-full bg-[#27c93f]"></div>
                     </div>
                 </div>
               </CardHeader>
               <CardContent className="pt-6 space-y-6">
-                <div className="flex items-end justify-between gap-2 h-30">
-                    <Skeleton className="h-[40%] w-full bg-[#4988C4]/50 rounded-t-md" />
-                    <Skeleton className="h-[70%] w-full bg-[#4988C4]/70 rounded-t-md" />
-                    <Skeleton className="h-[50%] w-full bg-[#4988C4]/50 rounded-t-md" />
-                    <Skeleton className="h-[90%] w-full bg-[#BDE8F5] rounded-t-md" />
-                    <Skeleton className="h-[60%] w-full bg-[#4988C4]/50 rounded-t-md" />
+                <div className="flex items-end justify-between gap-2 h-32">
+                    <Skeleton className="h-[40%] w-full bg-[#26bafd]/20 rounded-t-sm" />
+                    <Skeleton className="h-[70%] w-full bg-[#d524fd]/40 rounded-t-sm" />
+                    <Skeleton className="h-[50%] w-full bg-[#26bafd]/20 rounded-t-sm" />
+                    <Skeleton className="h-[90%] w-full bg-[#26bafd] shadow-[0_0_15px_#26bafd] rounded-t-sm" />
+                    <Skeleton className="h-[60%] w-full bg-[#d524fd]/20 rounded-t-sm" />
                 </div>
                 
                 <div className="space-y-3">
-                  <div className="flex items-center space-x-4 bg-white/5 p-3 rounded-lg">
-                    <Skeleton className="h-10 w-10 rounded-full bg-[#1C4D8D]" />
-                    <div className="space-y-2 flex-1">
-                      <Skeleton className="h-3 w-[70%] bg-[#4988C4]/50" />
-                      <Skeleton className="h-2 w-[40%] bg-[#4988C4]/30" />
+                  {[1, 2].map((_, i) => (
+                    <div key={i} className="flex items-center space-x-4 bg-slate-900/50 p-3 rounded-lg border border-slate-800">
+                        <Skeleton className="h-10 w-10 rounded-full bg-slate-800" />
+                        <div className="space-y-2 flex-1">
+                        <Skeleton className="h-3 w-[70%] bg-slate-700" />
+                        <Skeleton className="h-2 w-[40%] bg-slate-800" />
+                        </div>
                     </div>
-                  </div>
-                  <div className="flex items-center space-x-4 bg-white/5 p-3 rounded-lg">
-                    <Skeleton className="h-10 w-10 rounded-full bg-[#1C4D8D]" />
-                    <div className="space-y-2 flex-1">
-                      <Skeleton className="h-3 w-[60%] bg-[#4988C4]/50" />
-                      <Skeleton className="h-2 w-[50%] bg-[#4988C4]/30" />
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -316,49 +305,59 @@ export default function LandingPage() {
       </section>
 
       {/* CONTACTO */}
-      <section id="contacto" className="py-24 bg-[#BDE8F5]">
-        <div className="max-w-4xl mx-auto px-6">
-            <div className="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+      <section id="contacto" className="py-24 relative overflow-hidden">
+        {/* Fondo degradado sutil */}
+        <div className="absolute inset-0 bg-linear-to-b from-[#030712] to-[#1a0b2e] opacity-80"></div>
+        
+        <div className="max-w-4xl mx-auto px-6 relative z-10">
+            <div className="bg-[#0a0a0a] border border-slate-800 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col md:flex-row">
                 
-                <div className="md:w-1/2 bg-[#0F2854] p-10 text-white flex flex-col justify-center">
-                    <h2 className="text-3xl font-bold mb-6">
-                        Empieza hoy la transformación digital de tu negocio
-                    </h2>
-                    <p className="text-[#BDE8F5] mb-8 text-lg">
-                        Cuéntanos cómo funciona tu operación y te proponemos una solución digital hecha a tu medida.
-                    </p>
-                    <div className="mt-auto space-y-3">
-                        <div className="flex items-center gap-3 text-[#4988C4]">
-                            <Factory size={20} /> <span className="text-white text-sm">Industrial & Manufactura</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-[#4988C4]">
-                            <ChefHat size={20} /> <span className="text-white text-sm">Restaurantes & Cocinas</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-[#4988C4]">
-                            <Globe size={20} /> <span className="text-white text-sm">Sitios Web & E-commerce</span>
+                <div className="md:w-1/2 p-10 text-white flex flex-col justify-center relative overflow-hidden">
+                    {/* Decoración fondo panel izquierdo */}
+                    <div className="absolute inset-0 bg-linear-to-br from-[#1c0c2e] to-[#030712] z-0"></div>
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-linear-to-r from-[#d524fd] to-[#26bafd]"></div>
+
+                    <div className="relative z-10">
+                        <h2 className="text-3xl font-bold mb-6">
+                            Empieza hoy la <span className="text-[#d524fd]">transformación digital</span>
+                        </h2>
+                        <p className="text-slate-400 mb-8 text-lg font-light">
+                            Cuéntanos cómo funciona tu operación y te proponemos una solución digital hecha a tu medida.
+                        </p>
+                        <div className="mt-auto space-y-4">
+                            {[
+                                {icon: Factory, text: "Industrial & Manufactura"},
+                                {icon: ChefHat, text: "Restaurantes & Cocinas"},
+                                {icon: Globe, text: "Sitios Web & E-commerce"}
+                            ].map((item, i) => (
+                                <div key={i} className="flex items-center gap-3 text-[#26bafd]">
+                                    <item.icon size={20} className="drop-shadow-[0_0_5px_#26bafd]"/> 
+                                    <span className="text-slate-300 text-sm">{item.text}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
 
                 {/* FORMULARIO LADO DERECHO */}
-                <div className="md:w-1/2 p-10 flex flex-col justify-center min-h-100">
+                <div className="md:w-1/2 p-10 flex flex-col justify-center min-h-112.5 bg-[#050505]">
                     {enviado ? (
                         <motion.div 
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             className="flex flex-col items-center justify-center text-center space-y-4"
                         >
-                            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center shadow-inner">
-                                <CheckCircle2 className="w-10 h-10 text-green-600" />
+                            <div className="w-20 h-20 bg-[#26bafd]/10 border border-[#26bafd] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(38,186,253,0.3)]">
+                                <CheckCircle2 className="w-10 h-10 text-[#26bafd]" />
                             </div>
-                            <h3 className="text-2xl font-bold text-[#0F2854]">¡Mensaje Recibido!</h3>
-                            <p className="text-slate-600">
+                            <h3 className="text-2xl font-bold text-white">¡Mensaje Recibido!</h3>
+                            <p className="text-slate-400">
                                 Gracias por contactar a Nuclea Tech. Analizaremos tu solicitud y te contactaremos pronto.
                             </p>
                             <Button 
                                 variant="outline" 
                                 onClick={() => setEnviado(false)} 
-                                className="mt-4 border-[#1C4D8D] text-[#1C4D8D] hover:bg-[#BDE8F5]"
+                                className="mt-4 border-slate-700 text-slate-300 hover:border-[#d524fd] hover:text-[#d524fd] hover:bg-transparent"
                             >
                                 Enviar otro mensaje
                             </Button>
@@ -366,21 +365,21 @@ export default function LandingPage() {
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-[#0F2854]">Nombre</label>
-                                <Input name="nombre" required placeholder="Tu nombre" className="border-[#4988C4]/30 focus:border-[#1C4D8D]" />
+                                <label className="text-sm font-medium text-[#26bafd]">Nombre</label>
+                                <Input name="nombre" required placeholder="Tu nombre" className="bg-[#0a0a0a] border-slate-800 text-white placeholder:text-slate-600 focus:border-[#d524fd] focus:ring-0 transition-colors" />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-[#0F2854]">Correo / Teléfono</label>
-                                <Input name="contacto" required placeholder="Contacto" className="border-[#4988C4]/30 focus:border-[#1C4D8D]" />
+                                <label className="text-sm font-medium text-[#26bafd]">Correo / Teléfono</label>
+                                <Input name="contacto" required placeholder="Contacto" className="bg-[#0a0a0a] border-slate-800 text-white placeholder:text-slate-600 focus:border-[#d524fd] focus:ring-0 transition-colors" />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-[#0F2854]">Mensaje</label>
-                                <Textarea name="mensaje" required placeholder="Breve descripción de tu necesidad..." className="h-24 border-[#4988C4]/30 focus:border-[#1C4D8D]" />
+                                <label className="text-sm font-medium text-[#26bafd]">Mensaje</label>
+                                <Textarea name="mensaje" required placeholder="Describe tu proyecto..." className="h-24 bg-[#0a0a0a] border-slate-800 text-white placeholder:text-slate-600 focus:border-[#d524fd] focus:ring-0 transition-colors" />
                             </div>
                             <Button 
                                 type="submit" 
                                 disabled={enviando}
-                                className="w-full bg-[#1C4D8D] hover:bg-[#0F2854] text-white h-12 text-lg font-bold transition-colors disabled:opacity-50 cursor-pointer"
+                                className="w-full bg-linear-to-r from-[#d524fd] to-[#26bafd] hover:from-[#be20e0] hover:to-[#21a0d8] text-white h-12 text-lg font-bold transition-all shadow-[0_0_15px_rgba(213,36,253,0.4)] hover:shadow-[0_0_25px_rgba(38,186,253,0.6)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {enviando ? "Enviando..." : "Quiero mi sistema digital"} 
                                 {!enviando && <ArrowRight className="ml-2 w-5 h-5"/>}
@@ -394,13 +393,15 @@ export default function LandingPage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[#0F2854] text-[#BDE8F5] py-10 border-t border-[#1C4D8D]/30">
+      <footer className="bg-[#030712] text-slate-500 py-10 border-t border-slate-900 relative">
+        <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-[#26bafd]/50 to-transparent"></div>
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-2xl font-black tracking-tighter text-white">
-                NUCLEA <span className="text-[#4988C4]">TECH</span>
+            <div className="text-2xl font-black tracking-tighter text-white flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-linear-to-br from-[#d524fd] to-[#26bafd] flex items-center justify-center text-[10px] text-white font-bold shadow-[0_0_10px_#d524fd]">NT</div>
+                <span>NUCLEA <span className="text-[#26bafd]">TECH</span></span>
             </div>
-            <p className="text-sm text-center md:text-right">
-                © 2026 Nuclea Tech · Software a la medida para negocios que quieren crecer con datos
+            <p className="text-sm text-center md:text-right font-light">
+                © 2026 Nuclea Tech · El futuro de tu operación.
             </p>
         </div>
       </footer>

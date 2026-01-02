@@ -77,7 +77,7 @@ export default function LandingPage() {
             <Link href="/about" className="hover:text-[#BDE8F5] transition">Nosotros</Link>
           </div>
           <a href="#contacto">
-            <Button className="bg-[#1C4D8D] hover:bg-[#4988C4] text-white rounded-full px-6 font-bold shadow-md transition-all cursor-pointer transition-all">
+            <Button className="bg-[#1C4D8D] hover:bg-[#4988C4] text-white rounded-full px-6 font-bold shadow-md transition-all cursor-pointer">
               Agendar Demo
             </Button>
           </a>

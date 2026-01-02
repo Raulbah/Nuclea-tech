@@ -61,7 +61,7 @@ export default function LandingPage() {
       </nav>
 
       {/* HERO SECTION */}
-      <section className="relative h-[700px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-175 flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop")' }}
@@ -264,7 +264,7 @@ export default function LandingPage() {
                 </div>
               </CardHeader>
               <CardContent className="pt-6 space-y-6">
-                <div className="flex items-end justify-between gap-2 h-[120px]">
+                <div className="flex items-end justify-between gap-2 h-30">
                     <Skeleton className="h-[40%] w-full bg-[#4988C4]/50 rounded-t-md" />
                     <Skeleton className="h-[70%] w-full bg-[#4988C4]/70 rounded-t-md" />
                     <Skeleton className="h-[50%] w-full bg-[#4988C4]/50 rounded-t-md" />

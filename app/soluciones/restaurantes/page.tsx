@@ -11,8 +11,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 
+// --- CONFIGURACIÓN DE CONTACTO ---
+const PHONE_NUMBER = "8145942033"; // <--- PON TU NÚMERO AQUÍ
+// ---------------------------------
+
 // DATOS DE PRECIOS
-const PRICING = {
+const PRICING: any = {
     mensual: [
         {
             name: "Básico",
@@ -107,7 +111,7 @@ const PRICING = {
 };
 
 // TABLA COMPARATIVA
-const COMPARISON = [
+const COMPARISON = [    
     { feature: "Quiosco + Tickets", basic: true, pro: true, ent: true },
     { feature: "Dashboards Básicos", basic: true, pro: true, ent: true },
     { feature: "Pantalla Cocina (KDS)", basic: false, pro: true, ent: true },
@@ -120,6 +124,34 @@ const COMPARISON = [
 ];
 
 export default function RestaurantPage() {
+
+    // --- FUNCIÓN PARA GENERAR EL LINK DE WHATSAPP ---
+    const handlePlanClick = (plan: any, cycle: string) => {
+        // Definir texto amigable para la modalidad
+        let modalidad = "Mensual";
+        if (cycle === 'anual') modalidad = "Anual";
+        if (cycle === 'unica') modalidad = "Pago Único (Licencia)";
+
+        // Nombre del plan (usamos type si existe, si no name)
+        const planName = plan.type ? `Licencia ${plan.type}` : plan.name;
+
+        // Construir el mensaje
+        const message = `
+            Hola Nuclea Tech,
+            Estoy viendo su página web y me interesa contratar este software para Restaurantes:
+
+            *Plan:* ${planName}
+            *Modalidad:* ${modalidad}
+            *Precio:* ${plan.price} ${plan.period}
+
+            ¿Me pueden ayudar con el proceso de pago e instalación?
+        `.trim();
+
+        // Codificar y abrir
+        const url = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+    };
+
     return (
         <div className={`min-h-screen bg-[#030712] text-slate-200 font-sans ${outfit.className} selection:bg-[#d524fd] selection:text-white`}>
             {/* NAVBAR */}
@@ -134,7 +166,7 @@ export default function RestaurantPage() {
                     </div>
                 </div>
             </nav>
-            <div className="max-w-7xl mx-auto px-6 py-16">                
+            <div className="max-w-7xl mx-auto px-6 py-16">
                 {/* HERO */}
                 <div className="text-center mb-12">
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
@@ -176,8 +208,7 @@ export default function RestaurantPage() {
                         {['mensual', 'anual', 'unica'].map((cycle) => (
                             <TabsContent key={cycle} value={cycle}>
                                 <div className="grid md:grid-cols-3 gap-8">
-                                    {/* @ts-ignore */}
-                                    {PRICING[cycle].map((plan, index) => (
+                                    {PRICING[cycle].map((plan: any, index: number) => (
                                         <motion.div 
                                             key={index}
                                             initial={{ opacity: 0, y: 20 }} 
@@ -211,6 +242,7 @@ export default function RestaurantPage() {
                                                         <span className="text-sm text-slate-500 font-normal"> {plan.period}</span>
                                                         {plan.extra && <p className="text-xs text-[#d524fd] mt-1 font-semibold">{plan.extra}</p>}
                                                     </div>
+
                                                     <ul className="space-y-3">
                                                         {plan.features.map((feature: string, i: number) => (
                                                             <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
@@ -222,7 +254,8 @@ export default function RestaurantPage() {
                                                 </CardContent>
                                                 <CardFooter>
                                                     <Button 
-                                                        className="w-full font-bold"
+                                                        onClick={() => handlePlanClick(plan, cycle)}
+                                                        className="w-full font-bold cursor-pointer hover:opacity-90 transition-opacity"
                                                         style={{ 
                                                             backgroundColor: plan.color === 'white' ? '#1e293b' : plan.color,
                                                             color: plan.color === 'white' ? 'white' : 'black'
@@ -284,9 +317,9 @@ export default function RestaurantPage() {
                             Si tu operación requiere integraciones especiales con ERPs o hardware específico, podemos personalizar el software para ti.
                         </p>
                         <div className="flex flex-col md:flex-row justify-center gap-4">
-                            <a href="https://wa.me/5215512345678" target="_blank">
+                            <a href="https://wa.me/8145942033" target="_blank">
                                 <Button size="lg" className="cursor-pointer bg-[#26bafd] hover:bg-[#1e95ca] text-black font-bold h-14 px-8 shadow-[0_0_20px_rgba(38,186,253,0.3)]">
-                                    Contactar Experto <Zap size={20} className="ml-2"/>
+                                    Contactar experto <Zap size={20} className="ml-2"/>
                                 </Button>
                             </a>
                         </div>

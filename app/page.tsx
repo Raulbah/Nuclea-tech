@@ -107,7 +107,7 @@ export default function LandingPage() {
           </div>
           
           <a href="#contacto">
-            <Button className="bg-transparent border border-[#26bafd] text-[#26bafd] hover:bg-[#26bafd] hover:text-black rounded-full px-6 font-bold shadow-[0_0_10px_rgba(38,186,253,0.3)] hover:shadow-[0_0_20px_rgba(38,186,253,0.6)] transition-all duration-300 md:text-sm text-xs h-10 flex items-center">
+            <Button className="cursor-pointer bg-transparent border border-[#26bafd] text-[#26bafd] hover:bg-[#26bafd] hover:text-black rounded-full px-6 font-bold shadow-[0_0_10px_rgba(38,186,253,0.3)] hover:shadow-[0_0_20px_rgba(38,186,253,0.6)] transition-all duration-300 md:text-sm text-xs h-10 flex items-center">
               Agendar Demo
             </Button>
           </a>
@@ -431,7 +431,7 @@ export default function LandingPage() {
       </footer>
       {/* BOTÓN FLOTANTE DE WHATSAPP */}
       <a 
-        href="https://wa.me/8141285185?text=Hola%20Nuclea%20Tech,%20me%20interesa%20una%20cotización."
+        href="https://wa.me/8145942033?text=Hola%20Nuclea%20Tech,%20me%20interesa%20una%20cotización."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 group"
